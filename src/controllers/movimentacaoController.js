@@ -1,0 +1,52 @@
+import Movimentacao from '../models/Movimentacao.js';
+import Livro from '../models/Livro.js';
+
+async function cadastrar(req, res) {
+    try {
+        const { livro_id, tipo, quantidade } = req.body;
+
+        const livro = await Livro.findByPk(livro_id);
+
+        if (!livro) {
+            return res.status(404).json({
+                mensagem: 'Livro não encontrado',
+            });
+        }
+
+        if (
+            tipo === 'saida' &&
+            livro.quantidade_estoque < quantidade
+        ) {
+            return res.status(400).json({
+                mensagem: 'Quantidade insuficiente em estoque',
+            });
+        }
+
+        const novaQuantidade =
+            tipo === 'entrada'
+                ? livro.quantidade_estoque + quantidade
+                : livro.quantidade_estoque - quantidade;
+
+        await livro.update({
+            quantidade_estoque: novaQuantidade,
+        });
+
+        const movimentacao = await Movimentacao.create({
+            livro_id,
+            tipo,
+            quantidade,
+        });
+
+        return res.status(201).json(movimentacao);
+
+    } catch (erro) {
+        return res.status(400).json({
+            mensagem: 'Erro ao cadastrar movimentação',
+            erro: erro.message,
+        });
+    }
+}
+
+export default {
+    cadastrar,
+};
