@@ -1,12 +1,12 @@
-import express from 'express';
-import {
+const express = require('express');
+const {
     cadastrar,
     listar,
     deletar,
-} from '../controllers/livroController.js';
+} = require('../controllers/livroController');
 
-import auth from '../middlewares/auth.js';
-import permitir from '../middlewares/checkRole.js';
+const auth = require('../middlewares/auth');
+const permitir = require('../middlewares/checkRole');
 
 const router = express.Router();
 
@@ -19,4 +19,4 @@ router.delete(
     deletar
 );
 
-export default router;
+module.exports = router;

@@ -1,5 +1,5 @@
-import Movimentacao from '../models/Movimentacao.js';
-import Livro from '../models/Livro.js';
+const Movimentacao = require('../models/Movimentacao');
+const Livro = require('../models/Livro');
 
 async function cadastrar(req, res) {
     try {
@@ -47,6 +47,4 @@ async function cadastrar(req, res) {
     }
 }
 
-export default {
-    cadastrar,
-};
+module.exports = { cadastrar };

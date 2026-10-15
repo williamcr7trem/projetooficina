@@ -1,13 +1,13 @@
-import express from 'express';
-import movimentacaoController from '../controllers/movimentacaoController.js';
-import auth from '../middlewares/auth.js';
+const express = require('express');
+const { cadastrar } = require('../controllers/movimentacaoController');
+const auth = require('../middlewares/auth');
 
 const router = express.Router();
 
 router.post(
     '/movimentacoes',
     auth,
-    movimentacaoController.cadastrar
+    cadastrar
 );
 
-export default router;
+module.exports = router;

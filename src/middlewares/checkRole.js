@@ -10,4 +10,4 @@ function permitir(...tiposPermitidos) {
     };
 }
 
-export default permitir;
+module.exports = permitir;
